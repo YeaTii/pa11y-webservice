@@ -75,7 +75,6 @@ module.exports = function(app) {
 					}
 				}
 			}
-
 			const task = await model.task.create(request.payload);
 
 			if (!task) {

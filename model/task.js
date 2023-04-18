@@ -43,7 +43,8 @@ module.exports = function(app, callback) {
 
 				return model.collection.insertOne(newTask)
 					.then(result => {
-						return model.prepareForOutput(result.ops[0]);
+						return model.collection.findOne(result.insertedId);
+						//return model.prepareForOutput(result.ops[0]);
 					})
 					.catch(error => {
 						console.error('model:task:create failed');
