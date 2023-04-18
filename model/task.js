@@ -25,8 +25,10 @@ const pa11y = require('pa11y');
 
 // Task model
 module.exports = function(app, callback) {
-	app.db.collection('tasks', async function(errors, collection) {
-		await collection.createIndex({
+	//app.db.collection('tasks', async function(errors, collection) {
+	let collection = app.db.collection('tasks');
+
+	collection.createIndex({
 			name: 1,
 			url: 1,
 			standard: 1
@@ -295,6 +297,6 @@ module.exports = function(app, callback) {
 			}
 
 		};
-		callback(errors, model);
-	});
+		callback(null, model);
+	//});
 };

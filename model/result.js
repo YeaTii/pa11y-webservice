@@ -17,16 +17,31 @@
 /* eslint no-catch-shadow: 'off' */
 /* eslint no-underscore-dangle: 'off' */
 /* eslint new-cap: 'off' */
-'use strict';
+//'use strict';
 
 const {ObjectID} = require('mongodb');
 
 // Result model
 module.exports = function(app, callback) {
-	app.db.collection('results', async (errors, collection) => {
-		await collection.createIndex({
-			date: 1
-		});
+
+	let collection = app.db.collection('results');
+	collection.createIndex({
+		date: 1
+	});
+
+	//console.log(app.db.listCollections('results'));
+
+	// app.db.listCollections('results').forEach(function(collection) {
+	// 	indexes = db[collection].getIndexes();
+	// 	print("Indexes for " + collection + ":");
+	// 	printjson(indexes);
+	// });
+
+	//app.db.listCollections('results')
+	//app.db.collection('results', async (errors, collection) => {
+	// 	await collection.createIndex({
+	// 		date: 1
+	// 	});
 
 		const model = {
 			collection: collection,
@@ -193,6 +208,6 @@ module.exports = function(app, callback) {
 			}
 
 		};
-		callback(errors, model);
-	});
+		callback(null, model);
+//	});
 };

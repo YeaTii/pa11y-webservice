@@ -56,16 +56,18 @@ function initApp(config, callback) {
 
 	async.series([
 		next => {
-			/* eslint camelcase: 'off' */
+			client.connect().then(
+				(client) => {
+					console.log('Connected successfully to server');
+					//console.log(client);
+					const db = client.db();
+					app.client = client;
+					app.db = db;
 
-			client.connect(error => {
-				console.log('Connected successfully to server');
-				const db = client.db();
-				app.client = client;
-				app.db = db;
-
-				next(error);
-			});
+					db.command({ ping: 1 });
+					console.log("Pinged your deployment. You successfully connected to MongoDB!");
+					next();
+				});
 		},
 
 		next => {
