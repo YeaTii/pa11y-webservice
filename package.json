@@ -1,6 +1,6 @@
 {
   "name": "@yeatii/pa11y-webservice",
-  "version": "5.0.1",
+  "version": "5.0.4",
   "engines": {
     "node": ">=14"
   },

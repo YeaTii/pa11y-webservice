@@ -19,7 +19,7 @@
 /* eslint new-cap: 'off' */
 //'use strict';
 
-const {ObjectID} = require('mongodb');
+const {ObjectId} = require('mongodb');
 
 // Result model
 module.exports = function(app, callback) {
@@ -50,8 +50,8 @@ module.exports = function(app, callback) {
 				if (!newResult.date) {
 					newResult.date = Date.now();
 				}
-				if (newResult.task && !(newResult.task instanceof ObjectID)) {
-					newResult.task = ObjectID(newResult.task);
+				if (newResult.task && !(newResult.task instanceof ObjectId)) {
+					newResult.task = new ObjectId(newResult.task);
 				}
 				return collection.insertOne(newResult)
 					.then(result => {
@@ -85,7 +85,7 @@ module.exports = function(app, callback) {
 					}
 				};
 				if (opts.task) {
-					filter.task = ObjectID(opts.task);
+					filter.task = new ObjectId(opts.task);
 				}
 
 				const prepare = opts.full ? model.prepareForFullOutput : model.prepareForOutput;
@@ -112,9 +112,9 @@ module.exports = function(app, callback) {
 			getById(id, full) {
 				const prepare = (full ? model.prepareForFullOutput : model.prepareForOutput);
 				try {
-					id = new ObjectID(id);
+					id = new ObjectId(id);
 				} catch (error) {
-					console.error('ObjectID generation failed.', error.message);
+					console.error('ObjectId generation failed.', error.message);
 					return null;
 				}
 				return collection.findOne({_id: id})
@@ -139,13 +139,13 @@ module.exports = function(app, callback) {
 			// Delete results for a single task
 			deleteByTaskId(id) {
 				try {
-					id = new ObjectID(id);
+					id = new ObjectId(id);
 				} catch (error) {
-					console.error('ObjectID generation failed.', error.message);
+					console.error('ObjectId generation failed.', error.message);
 					return null;
 				}
 
-				return collection.deleteMany({task: ObjectID(id)})
+				return collection.deleteMany({task: ObjectId(id)})
 					.catch(error => {
 						console.error(`model:result:deleteByTaskId failed, with id: ${id}`);
 						console.error(error.message);
@@ -157,16 +157,16 @@ module.exports = function(app, callback) {
 				const prepare = (opts.full ? model.prepareForFullOutput : model.prepareForOutput);
 
 				try {
-					id = new ObjectID(id);
-					task = new ObjectID(task);
+					id = new ObjectId(id);
+					task = new ObjectId(task);
 				} catch (error) {
-					console.error('ObjectID generation failed.', error.message);
+					console.error('ObjectId generation failed.', error.message);
 					return null;
 				}
 
 				return collection.findOne({
-					_id: ObjectID(id),
-					task: ObjectID(task)
+					_id: ObjectId(id),
+					task: ObjectId(task)
 				})
 					.then(result => {
 						if (result) {

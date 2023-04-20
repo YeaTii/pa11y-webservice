@@ -14,7 +14,7 @@
 // along with Pa11y Webservice.  If not, see <http://www.gnu.org/licenses/>.
 
 /* eslint camelcase: 'off' */
-'use strict';
+//'use strict';
 
 const {green, grey, red} = require('kleur');
 const Joi = require('joi');
@@ -30,10 +30,11 @@ module.exports = function(app) {
 		method: 'GET',
 		path: '/tasks/{id}',
 		handler: async (request, reply) => {
+
 			const task = await model.task.getById(request.params.id);
 
 			if (!task) {
-				return reply.response('Not Found').code(404);
+				return reply.response('Not Found '  + request.params.id).code(404);
 			}
 
 			if (request.query.lastres) {
@@ -70,7 +71,7 @@ module.exports = function(app) {
 			const task = await model.task.getById(request.params.id);
 
 			if (!task) {
-				return reply.response('Not Found').code(404);
+				return reply.response('Not Found '  + request.params.id).code(404);
 			}
 
 			if (request.payload.actions && request.payload.actions.length) {
